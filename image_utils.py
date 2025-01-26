@@ -1,3 +1,8 @@
+%load_ext autoreload
+%autoreload 2
+
+!wget https://raw.githubusercontent.com/yotam-biu/ps12/main/image_utils.py -O /content/image_utils.py
+
 from image_utils import load_image, edge_detection
 from PIL import Image
 from skimage.filters import median
