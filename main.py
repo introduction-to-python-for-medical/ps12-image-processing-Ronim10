@@ -1,32 +1,29 @@
-from PIL import Image
-import numpy as np
-from scipy.ndimage import convolve
+%load_ext autoreload
+%autoreload 2
+
+!wget https://raw.githubusercontent.com/yotam-biu/ps12/main/image_utils.py -O /content/image_utils.py
+
 from image_utils import load_image, edge_detection
+from PIL import Image
 from skimage.filters import median
-import matplotlib.pyplot as plt
 from skimage.morphology import ball
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import convolve2d
 
+def load_image(file_path):
+    image = Image.open(file_path)
+    image_array = np.array(image)
+    return image_array
 
-def suppress_noise(image_array):
-    clean_image = median(image_array, ball(3))
-    return clean_image
-
-# המרה לבינארי
-def convert_to_binary(edges, threshold):
-    binary_image = (edges > threshold).astype(np.uint8)
-    return binary_image
-
-# שמירת תמונה בינארית
-def save_binary_image(binary_image, file_name):
-    edge_image = Image.fromarray(binary_image * 255)  # המרה לסקלת 0-255
-    edge_image.save(file_name)
-
-# הרצת הקוד
-image_array = load_image('Snow.jpeg')
-clean_image = suppress_noise(image_array)
-edges = edge_detection(clean_image)
-binary_edges = convert_to_binary(edges, threshold=50)  # סף מתאים בהתאם לתמונה
-save_binary_image(binary_edges, 'my_edges.png')
-plt.imshow(binary_edges, cmap='gray')
-plt.title("Binary Edges")
-plt.show()
+def edge_detection(image_array):
+    if image_array.ndim == 3:  # אם התמונה צבעונית
+        gray_image = np.mean(image_array, axis=2)
+    else:
+        gray_image = image_array  # אם התמונה כבר בגווני אפור
+    kernelY = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
+    kernelX = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+    edgeY = convolve2d(gray_image, kernelY, mode="same", boundary="fill", fillvalue=0.0)
+    edgeX = convolve2d(gray_image, kernelX, mode="same", boundary="fill", fillvalue=0.0)
+    edgeMAG = np.sqrt(edgeX**2 + edgeY**2)  
+    return edgeMAG
