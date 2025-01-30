@@ -1,25 +1,24 @@
-def suppress_noise(image_array):
-  clean_image = median(image_array, ball(3))
-  return clean_image
+from skimage.filters import median
+from skimage.morphology import ball
 
-def detect_edges (clean_image):
-  edges = edge_detection(clean_image)
-  return edges
+clean_image = median(image, ball(3))
+from PIL import Image
 
-def convert_to_binary (edges, threshold):
-  binary_image = (edges > threshold).astype(np.uint8)
-  return binary_image
+edge_image = Image.fromarray(edge_binary)
+edge_image.save('my_edges.png')
+from image_utils import load_image, edge_detection
+from PIL import Image
+from skimage.filters import median
+from skimage.morphology import ball
+import numpy as np
+import matplotlib.pyplot as plt
 
-def save_binary_image (binary_image, file_name):
-  edge_image = Image.fromarray(binary_image * 255)
-  edge_image.save(file_name)
+perach = load_image('פרח.jpg')
+clean_image = median(perach, ball(3))
+edge_mag = edge_detection(clean_image)
 
-image_array = load_image('Snow.jpeg')
-clean_image = suppress_noise(image_array)
-edges = detect_edges(clean_image)
-binary_edges = convert_to_binary(edges, threshold=50)
-save_binary_image(binary_edges, 'my_edges.png')
+edge_binary = edge_mag > 40
+plt.imshow(edge_binary, cmap='gray')
 
-plt.imshow(binary_edges, cmap='gray')
-plt.title("binary edges")
-plt.show()
+edge_image = Image.fromarray(edge_binary)
+edge_image.save('my_edges.png'
