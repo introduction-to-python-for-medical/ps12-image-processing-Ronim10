@@ -12,7 +12,7 @@ def load_image(file_path):
   image_array = np.array(image)
   return image_array
 
-load_image('Snow.jpg')
+load_image('Snow.jpeg')
 def edge_detection(image_array):
   gray_image = np.mean(image_array, axis=2)
   kernelY = np.array([
@@ -30,4 +30,4 @@ def edge_detection(image_array):
   edgemag = np.sqrt(edgex*2 + edgey*2)
   return edgemag
 
-edge_detection(load_image('Snow.jpg')
+edge_detection(load_image('Snow.jpeg')
