@@ -13,7 +13,7 @@ from skimage.morphology import ball
 import numpy as np
 import matplotlib.pyplot as plt
 
-perach = load_image('פרח.jpg')
+perach = load_image('Snow.jpg')
 clean_image = median(perach, ball(3))
 edge_mag = edge_detection(clean_image)
 
