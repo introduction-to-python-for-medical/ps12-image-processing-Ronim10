@@ -21,4 +21,4 @@ edge_binary = edge_mag > 40
 plt.imshow(edge_binary, cmap='gray')
 
 edge_image = Image.fromarray(edge_binary)
-edge_image.save('my_edges.png'
+edge_image.save('my_edges.png')
