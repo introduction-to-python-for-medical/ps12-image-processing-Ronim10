@@ -7,8 +7,8 @@ def load_image(file_path):
     image = Image.open(file_path)
     image_array = np.array(image)
     return image_array
-def edge_detection(image):
-    grayscale_image = np.mean(image, axis=2).astype(np.float32)
+def edge_detection(image_array):
+    grayscale_image = np.mean(image_array, axis=2).astype(np.float32)
     
     # Define the filters
     kernelY = np.array([[1, 0, -1],
