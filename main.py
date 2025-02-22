@@ -3,7 +3,8 @@ from skimage.morphology import ball
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-from image_utils import load_image, edge_detection
+import image_utils.load_image
+import image_utils.edge_detection
 image=load_image('פרח.jpg')
 plt.imshow(image)
 clean_image = median(image, ball(3))
